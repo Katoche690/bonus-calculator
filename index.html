@@ -156,6 +156,19 @@
             vertical-align: middle;
         }
 
+        .brut-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 0.6rem;
+            padding: 2px 5px;
+            border-radius: 3px;
+            margin-left: 5px;
+            vertical-align: middle;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
         .days-input-container {
             display: flex;
             align-items: center;
@@ -201,6 +214,13 @@
             font-weight: bold;
             color: #0077b6;
             margin: 20px 0;
+        }
+
+        .result-amount .brut-text {
+            font-size: 1.2rem;
+            color: #5a6c7d;
+            font-weight: normal;
+            margin-left: 8px;
         }
 
         .result-note {
@@ -281,7 +301,7 @@
             </div>
             <span class="operator">=</span>
             <div class="formula-box result">
-                <div class="value" id="result-display">1 174,80 €</div>
+                <div class="value"><span id="result-display">1 174,80 €</span><span class="brut-badge">Brut</span></div>
                 <div class="label">Bonus</div>
             </div>
         </div>
@@ -335,7 +355,10 @@
 
         <div class="result-section">
             <h2>💸 Versement du Bonus</h2>
-            <div class="result-amount" id="final-result">1 174,80 € Brut</div>
+            <div class="result-amount">
+                <span id="final-result">1 174,80 €</span>
+                <span class="brut-text">Brut</span>
+            </div>
             <p class="result-note">À verser avec le salaire de mars 2026</p>
             <div class="calculation-breakdown">
                 <strong>Détail du calcul :</strong><br>
@@ -399,7 +422,7 @@
 
             // Update calculation detail
             document.getElementById('calculation-detail').textContent = 
-                `${formatPercent(performance)} × ${formatPercent(bonusTarget)} × ${formatCurrency(salary)} × ${formatPercent(presencePercent)} = ${formatCurrency(bonus)}`;
+                `${formatPercent(performance)} × ${formatPercent(bonusTarget)} × ${formatCurrency(salary)} × ${formatPercent(presencePercent)} = ${formatCurrency(bonus)} Brut`;
         }
 
         // Add event listeners to salary inputs
