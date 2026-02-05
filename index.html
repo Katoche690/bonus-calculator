@@ -91,10 +91,19 @@
             border-top-color: #00a896;
         }
 
+        .detail-card.locked {
+            border-top-color: #9ca3af;
+            background: #f9fafb;
+        }
+
         .detail-card h3 {
             color: #1a3a5c;
             font-size: 1rem;
             margin-bottom: 10px;
+        }
+
+        .detail-card.locked h3 {
+            color: #6b7280;
         }
 
         .detail-card p {
@@ -127,6 +136,24 @@
             outline: none;
             border-color: #0077b6;
             box-shadow: 0 0 0 3px rgba(0, 119, 182, 0.1);
+        }
+
+        .input-group input:disabled {
+            background-color: #e5e7eb;
+            color: #6b7280;
+            cursor: not-allowed;
+            border-color: #d1d5db;
+        }
+
+        .locked-badge {
+            display: inline-block;
+            background: #9ca3af;
+            color: white;
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 8px;
+            vertical-align: middle;
         }
 
         .days-input-container {
@@ -244,7 +271,7 @@
             </div>
             <span class="operator">×</span>
             <div class="formula-box">
-                <div class="value" id="salary-display">25 000 €</div>
+                <div class="value" id="salary-display">24 000 €</div>
                 <div class="label">Salaire<br>annualisé</div>
             </div>
             <span class="operator">×</span>
@@ -254,27 +281,27 @@
             </div>
             <span class="operator">=</span>
             <div class="formula-box result">
-                <div class="value" id="result-display">1 223,75 €</div>
+                <div class="value" id="result-display">1 174,80 €</div>
                 <div class="label">Bonus</div>
             </div>
         </div>
 
         <div class="details-grid">
-            <div class="detail-card">
-                <h3>📊 Performance Groupe</h3>
+            <div class="detail-card locked">
+                <h3>📊 Performance Groupe <span class="locked-badge">🔒 Fixe</span></h3>
                 <p>Le bonus est lié aux KPIs du Groupe Vestas. Les résultats varient de 0% à 150% selon la performance.</p>
                 <div class="input-group">
                     <label>Taux de performance (%)</label>
-                    <input type="number" id="performance" value="97.9" step="0.1" min="0" max="150">
+                    <input type="number" id="performance" value="97.9" step="0.1" min="0" max="150" disabled>
                 </div>
             </div>
 
-            <div class="detail-card">
-                <h3>🎯 Objectif de bonus</h3>
+            <div class="detail-card locked">
+                <h3>🎯 Objectif de bonus <span class="locked-badge">🔒 Fixe</span></h3>
                 <p>L'objectif de bonus d'un employé est un % du salaire qui varie selon le niveau hiérarchique.</p>
                 <div class="input-group">
                     <label>Pourcentage du salaire (%)</label>
-                    <input type="number" id="bonus-target" value="5" step="0.5" min="0" max="100">
+                    <input type="number" id="bonus-target" value="5" step="0.5" min="0" max="100" disabled>
                 </div>
             </div>
 
@@ -283,11 +310,11 @@
                 <p>Le salaire annualisé est la projection du salaire de l'employé sur une période complète de 12 mois.</p>
                 <div class="input-group">
                     <label>Salaire mensuel brut (€)</label>
-                    <input type="number" id="salary-monthly" value="2083.33" step="50" min="0">
+                    <input type="number" id="salary-monthly" value="2000" step="50" min="0">
                 </div>
                 <div class="input-group">
                     <label>Salaire annuel brut (€)</label>
-                    <input type="number" id="salary-annual" value="25000" step="100" min="0">
+                    <input type="number" id="salary-annual" value="24000" step="100" min="0">
                 </div>
             </div>
 
@@ -308,11 +335,11 @@
 
         <div class="result-section">
             <h2>💸 Versement du Bonus</h2>
-            <div class="result-amount" id="final-result">1 223,75 €</div>
+            <div class="result-amount" id="final-result">1 174,80 €</div>
             <p class="result-note">À verser avec le salaire de mars 2026</p>
             <div class="calculation-breakdown">
                 <strong>Détail du calcul :</strong><br>
-                <code id="calculation-detail">97.9% × 5% × 25 000 € × 100% = 1 223,75 €</code>
+                <code id="calculation-detail">97.9% × 5% × 24 000 € × 100% = 1 174,80 €</code>
             </div>
         </div>
 
@@ -379,8 +406,8 @@
         document.getElementById('salary-monthly').addEventListener('input', updateFromMonthly);
         document.getElementById('salary-annual').addEventListener('input', updateFromAnnual);
 
-        // Add event listeners to other inputs
-        document.querySelectorAll('input:not(#salary-monthly):not(#salary-annual)').forEach(input => {
+        // Add event listeners to other inputs (excluding disabled ones)
+        document.querySelectorAll('input:not(#salary-monthly):not(#salary-annual):not(:disabled)').forEach(input => {
             input.addEventListener('input', calculateBonus);
         });
 
